@@ -7,17 +7,36 @@ window.addEventListener('scroll', () => {
 // Mobile menu toggle
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
+
+function closeMenu() {
+    navLinks.classList.remove('active');
+    navToggle.classList.remove('active');
+    navOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function openMenu() {
+    navLinks.classList.add('active');
+    navToggle.classList.add('active');
+    navOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
 navToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    navToggle.classList.toggle('active');
+    if (navLinks.classList.contains('active')) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
 });
+
+// Close menu on overlay tap
+navOverlay.addEventListener('click', closeMenu);
 
 // Close mobile menu on link click
 navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        navToggle.classList.remove('active');
-    });
+    link.addEventListener('click', closeMenu);
 });
 
 // Smooth scroll for anchor links
